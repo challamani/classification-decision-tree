@@ -1,0 +1,21 @@
+{"root": {
+  "decisions": [
+    {"type": "STRING_EQ","value": "Electronics","referenceNode": "Electronics"},
+    {"type": "STRING_EQ","value": "Books","referenceNode": "Books"},
+    {"type": "STRING_EQ","value": "Clothes","referenceNode": "Clothes"}
+  ]
+},
+  "Electronics": {
+    "decisions":[
+      {"type": "STRING_EQ","value": "Andhra","referenceNode": "Electronics.Andhra"},
+      {"type": "STRING_EQ","value": "Kerala","referenceNode": "Electronics.Kerala"}
+    ]
+  },
+  "Electronics.Andhra": {
+    "decisions":[
+      {"type": "GREATER_THAN","value": "10000","referenceNode": "Electronics.Andhra.greaterThanTenThousand"},
+      {"type": "BETWEEN","value": "5000,9999","referenceNode": "Electronics.Andhra.priceBetween"},
+      {"type": "LESS_THAN","value": "5000","referenceNode": "Electronics.Andhra.priceLessThan"}
+    ]
+  }
+}
