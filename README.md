@@ -1,2 +1,2 @@
-# classification-decision-tree
-Data set classification based on dynamic decision tree (XML/JSON)
+# Classification decision-tree
+Dataset classification based on dynamic decision tree (XML/JSON)
