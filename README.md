@@ -282,5 +282,5 @@ function drawChart(){
 }
 ```
 
-![Classification Chart View](https://github.com/challman/classification-decision-tree/blob/master/googles_org_chart_screenshot.png?raw=true)
+![Classification Chart View](https://github.com/challamani/classification-decision-tree/blob/master/src/main/resources/images/googles_org_chart_screenshot.png)
 
