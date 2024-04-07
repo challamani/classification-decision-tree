@@ -201,40 +201,6 @@ curl --location 'http://localhost:8080/api/classificationTree/employee/superDepa
                     }
                 ],
                 "recordsCount": 7
-            },
-            {
-                "level": 1,
-                "name": "Marketing",
-                "label": "Marketing (4)",
-                "parent": "ROOT",
-                "children": [
-                    {
-                        "level": 2,
-                        "name": "Marketing.Sales",
-                        "label": "Sales (4)",
-                        "parent": "Marketing",
-                        "children": [
-                            {
-                                "level": 3,
-                                "name": "Marketing.Sales.Strategy",
-                                "label": "Strategy (2)",
-                                "parent": "Marketing.Sales",
-                                "recordsCount": 2,
-                                "fileName": "Marketing_Sales_Strategy.csv"
-                            },
-                            {
-                                "level": 3,
-                                "name": "Marketing.Sales.A1Strategy",
-                                "label": "A1Strategy (2)",
-                                "parent": "Marketing.Sales",
-                                "recordsCount": 2,
-                                "fileName": "Marketing_Sales_A1Strategy.csv"
-                            }
-                        ],
-                        "recordsCount": 4
-                    }
-                ],
-                "recordsCount": 4
             }
         ]
     }
