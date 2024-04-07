@@ -1,0 +1,107 @@
+{
+  "root": {
+    "decisions": [
+      {
+        "type": "STRING_EQ",
+        "value": "Electronics",
+        "referenceNode": "Electronics"
+      },
+      {
+        "type": "STRING_EQ",
+        "value": "Books",
+        "referenceNode": "Books"
+      },
+      {
+        "type": "STRING_EQ",
+        "value": "Clothes",
+        "referenceNode": "Clothes"
+      }
+    ]
+  },
+  "Electronics": {
+    "decisions": [
+      {
+        "type": "STRING_EQ",
+        "value": "Andhra",
+        "referenceNode": "Electronics.Andhra"
+      },
+      {
+        "type": "STRING_EQ",
+        "value": "Kerala",
+        "referenceNode": "Electronics.Kerala"
+      },
+      {
+        "type": "STRING_EQ",
+        "value": "Delhi",
+        "referenceNode": "Electronics.Delhi"
+      },
+      {
+        "type": "STRING_EQ",
+        "value": "Mumbai",
+        "referenceNode": "Electronics.Mumbai"
+      }
+    ]
+  },
+  "Books": {
+    "decisions": [
+      {
+        "type": "STRING_EQ",
+        "value": "Andhra",
+        "referenceNode": "Books.Andhra"
+      },
+      {
+        "type": "STRING_EQ",
+        "value": "Kerala",
+        "referenceNode": "Books.Kerala"
+      },
+      {
+        "type": "STRING_EQ",
+        "value": "Delhi",
+        "referenceNode": "Books.Delhi"
+      },
+      {
+        "type": "STRING_EQ",
+        "value": "Mumbai",
+        "referenceNode": "Books.Mumbai"
+      }
+    ]
+  },
+  "Electronics.Andhra": {
+    "decisions": [
+      {
+        "type": "GREATER_THAN",
+        "value": "10000",
+        "referenceNode": "Electronics.Andhra.greaterThanTenThousand"
+      },
+      {
+        "type": "BETWEEN",
+        "value": "5000,9999",
+        "referenceNode": "Electronics.Andhra.priceBetween"
+      },
+      {
+        "type": "LESS_THAN",
+        "value": "5000",
+        "referenceNode": "Electronics.Andhra.priceLessThan"
+      }
+    ]
+  },
+  "Electronics.Mumbai": {
+    "decisions": [
+      {
+        "type": "GREATER_THAN",
+        "value": "10000",
+        "referenceNode": "Electronics.Mumbai.greaterThanTenThousand"
+      },
+      {
+        "type": "BETWEEN",
+        "value": "5000,9999",
+        "referenceNode": "Electronics.Mumbai.priceBetween"
+      },
+      {
+        "type": "LESS_THAN",
+        "value": "5000",
+        "referenceNode": "Electronics.Mumbai.priceLessThan"
+      }
+    ]
+  }
+}

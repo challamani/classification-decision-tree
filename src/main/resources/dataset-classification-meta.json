@@ -1,0 +1,132 @@
+[
+  {
+    "name": "order",
+    "classificationNodes": [
+      {
+        "name": "price",
+        "type": "split",
+        "dataType": "number",
+        "decisions": [
+          {
+            "type": "GREATER_THAN",
+            "value": "10000",
+            "nodeLabel": "greaterThan10K"
+          },
+          {
+            "type": "BETWEEN",
+            "value": "5000,9999",
+            "nodeLabel": "priceBetween"
+          },
+          {
+            "type": "LESS_THAN",
+            "value": "5000",
+            "nodeLabel": "lessThan5K"
+          }
+        ]
+      },
+      {
+        "name": "category",
+        "type": "root",
+        "dataType": "string",
+        "decisions": [
+          {
+            "type": "STRING_EQ",
+            "value": null,
+            "nodeLabel": null
+          }
+        ]
+      },
+      {
+        "name": "state",
+        "type": "parent",
+        "dataType": "string",
+        "decisions": [
+          {
+            "type": "STRING_EQ",
+            "value": null,
+            "nodeLabel": null
+          }
+        ]
+      },
+      {
+        "name": "zipCode",
+        "type": "parent",
+        "dataType": "string",
+        "decisions": [
+          {
+            "type": "STRING_EQ",
+            "value": null,
+            "nodeLabel": null
+          }
+        ]
+      }
+    ],
+    "classificationOptions": [
+      {
+        "name": "category.state.price.zipCode",
+        "nodeLevels": [
+          {
+            "name": "category",
+            "executionId": 0
+          },
+          {
+            "name": "state",
+            "executionId": 1
+          },
+          {
+            "name": "price",
+            "executionId": 2
+          },
+          {
+            "name": "zipCode",
+            "executionId": 3
+          }
+        ]
+      },
+      {
+        "name": "state.category.zipCode",
+        "nodeLevels": [
+          {
+            "name": "state",
+            "executionId": 0
+          },
+          {
+            "name": "category",
+            "executionId": 1
+          },
+          {
+            "name": "zipCode",
+            "executionId": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "employee",
+    "classificationNodes":[],
+    "classificationOptions": [
+      {
+        "name": "superDepartment.department.project.team",
+        "nodeLevels": [
+          {
+            "name": "superDepartment",
+            "executionId": 0
+          },
+          {
+            "name": "department",
+            "executionId": 1
+          },
+          {
+            "name": "project",
+            "executionId": 2
+          },
+          {
+            "name": "team",
+            "executionId": 3
+          }
+        ]
+      }
+    ]
+  }
+]
