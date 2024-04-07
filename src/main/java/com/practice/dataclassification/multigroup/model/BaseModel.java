@@ -1,4 +1,4 @@
-package com.practice.dataclassification.multigroup.domain;
+package com.practice.dataclassification.multigroup.model;
 
 import java.io.Serializable;
 

@@ -6,17 +6,19 @@ import com.google.gson.JsonObject;
 import com.practice.dataclassification.multigroup.builder.Node;
 import com.practice.dataclassification.multigroup.builder.ClassificationTreeStructure;
 import com.practice.dataclassification.multigroup.builder.Condition;
-import com.practice.dataclassification.multigroup.domain.ClassificationTree;
+import com.practice.dataclassification.multigroup.model.ClassificationTreeNode;
 import com.practice.dataclassification.multigroup.meta.ClassificationNode;
 import com.practice.dataclassification.multigroup.meta.ClassificationOption;
 import com.practice.dataclassification.multigroup.meta.DatasetClassificationMeta;
 import com.practice.dataclassification.multigroup.model.ClassificationTreeRequest;
+import com.practice.dataclassification.multigroup.model.FlatNode;
 import com.practice.dataclassification.multigroup.repository.CommonDatasetRepository;
 import com.practice.dataclassification.multigroup.util.CommonUtil;
 import com.practice.dataclassification.multigroup.util.DataSetUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -115,8 +117,35 @@ public class ClassificationTreeService {
         }
     }
 
-    public ClassificationTree getClassificationTree(ClassificationTreeRequest classificationTreeRequest){
+    public ClassificationTreeNode getClassificationTree(ClassificationTreeRequest classificationTreeRequest){
         createClassificationTreeNodes(classificationTreeRequest);
         return classificationTreeStructure.getDecisionTree();
+    }
+
+    public List<FlatNode> getFlatClassificationNodeRelations(ClassificationTreeRequest classificationTreeRequest){
+        ClassificationTreeNode classificationTreeNode =  getClassificationTree(classificationTreeRequest);
+        List<FlatNode> flatNodes = new ArrayList<>();
+       /* flatNodes.add(new FlatNode(classificationTreeNode.getName(),
+                classificationTreeNode.getParent(),
+                classificationTreeNode.getLabel(),
+                classificationTreeNode.getRecordsCount()));*/
+
+        classificationTreeNode.getChildren().forEach(treeNode -> {
+            populateFlatNodes(treeNode, flatNodes);
+        });
+        return flatNodes;
+    }
+
+    private void populateFlatNodes(ClassificationTreeNode classificationTreeNode,List<FlatNode> flatNodes) {
+        flatNodes.add(new FlatNode(classificationTreeNode.getName(),
+                (classificationTreeNode.getParent().equalsIgnoreCase("ROOT")?"":classificationTreeNode.getParent()),
+                classificationTreeNode.getLabel(),
+                classificationTreeNode.getRecordsCount()));
+
+        if(!CollectionUtils.isEmpty(classificationTreeNode.getChildren())){
+            classificationTreeNode.getChildren().forEach(treeNode -> {
+                populateFlatNodes(treeNode, flatNodes);
+            });
+        }
     }
 }

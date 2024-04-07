@@ -22,7 +22,6 @@ import java.util.List;
 public class DatasetController {
 
     private final CommonDatasetRepository commonDatasetRepository;
-
     @PostMapping("/api/dataset/{datasetName}/record")
     public ResponseEntity<String> handlePostRequest(@PathVariable String datasetName, @RequestBody String jsonString) {
         JsonObject jsonObject =  new Gson().fromJson(jsonString, JsonObject.class);

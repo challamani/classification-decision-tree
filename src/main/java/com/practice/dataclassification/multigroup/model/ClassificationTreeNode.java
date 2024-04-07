@@ -1,19 +1,19 @@
-package com.practice.dataclassification.multigroup.domain;
+package com.practice.dataclassification.multigroup.model;
 
 import java.util.List;
 
-public class ClassificationTree {
+public class ClassificationTreeNode {
     private Integer level;
     private String name;
     private String label;
     private String parent;
-    private List<ClassificationTree> children;
+    private List<ClassificationTreeNode> children;
     private Integer recordsCount;
     private String fileName;
     private String expandedIcon;
     private String collapsedIcon;
 
-    public ClassificationTree() {
+    public ClassificationTreeNode() {
         expandedIcon = "fa fa-folder-open";
         collapsedIcon="fa fa-folder";
     }
@@ -58,11 +58,11 @@ public class ClassificationTree {
         this.parent = parent;
     }
 
-    public List<ClassificationTree> getChildren() {
+    public List<ClassificationTreeNode> getChildren() {
         return children;
     }
 
-    public void setChildren(List<ClassificationTree> children) {
+    public void setChildren(List<ClassificationTreeNode> children) {
         this.children = children;
     }
 

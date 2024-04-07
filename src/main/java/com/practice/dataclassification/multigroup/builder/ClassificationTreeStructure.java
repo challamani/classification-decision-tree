@@ -1,7 +1,7 @@
 package com.practice.dataclassification.multigroup.builder;
 
 import com.google.gson.JsonObject;
-import com.practice.dataclassification.multigroup.domain.ClassificationTree;
+import com.practice.dataclassification.multigroup.model.ClassificationTreeNode;
 import com.practice.dataclassification.multigroup.meta.ClassificationNode;
 import com.practice.dataclassification.multigroup.meta.Decision;
 import org.slf4j.Logger;
@@ -94,32 +94,32 @@ public class ClassificationTreeStructure {
         }
     }
 
-    public ClassificationTree getDecisionTree() {
+    public ClassificationTreeNode getDecisionTree() {
 
-        ClassificationTree classificationTree = new ClassificationTree();
-        classificationTree.setLabel("ROOT");
-        classificationTree.setName("ROOT");
-        classificationTree.setLevel(0);
-        classificationTree.setChildren(new ArrayList<>());
+        ClassificationTreeNode classificationTreeNode = new ClassificationTreeNode();
+        classificationTreeNode.setLabel("ROOT");
+        classificationTreeNode.setName("ROOT");
+        classificationTreeNode.setLevel(0);
+        classificationTreeNode.setChildren(new ArrayList<>());
         root.getReferenceNode().forEach((k, v) -> {
-            recursiveChildNode(1, v, classificationTree.getChildren());
+            recursiveChildNode(1, v, classificationTreeNode.getChildren());
         });
-        return classificationTree;
+        return classificationTreeNode;
     }
 
-    public ClassificationTree getDecisionTree(Map<String,String> displayNamesMap) {
+    public ClassificationTreeNode getDecisionTree(Map<String,String> displayNamesMap) {
 
-        ClassificationTree classificationTree = new ClassificationTree();
-        classificationTree.setLabel("ROOT");
-        classificationTree.setLevel(0);
-        classificationTree.setChildren(new ArrayList<>());
+        ClassificationTreeNode classificationTreeNode = new ClassificationTreeNode();
+        classificationTreeNode.setLabel("ROOT");
+        classificationTreeNode.setLevel(0);
+        classificationTreeNode.setChildren(new ArrayList<>());
         root.getReferenceNode().forEach((k, v) -> {
-            recursiveChildNode(1, v, classificationTree.getChildren(),displayNamesMap);
+            recursiveChildNode(1, v, classificationTreeNode.getChildren(),displayNamesMap);
         });
-        return classificationTree;
+        return classificationTreeNode;
     }
 
-    private void recursiveChildNode(int index, Node<JsonObject> node, List<ClassificationTree> children) {
+    private void recursiveChildNode(int index, Node<JsonObject> node, List<ClassificationTreeNode> children) {
 
         if(Objects.isNull(node.getInstanceCount())) {
             return;
@@ -128,51 +128,51 @@ public class ClassificationTreeStructure {
         Integer lastIndexOfSeparator = node.getNodeName().lastIndexOf('.');
         String[] targetNames = node.getNodeName().split("\\.");
         String dataNodeName = targetNames[targetNames.length - 1];
-        ClassificationTree classificationTree = new ClassificationTree();
+        ClassificationTreeNode classificationTreeNode = new ClassificationTreeNode();
 
         String name = dataNodeName+" ("+(node.getInstanceCount()!=null?node.getInstanceCount():0)+")";
-        classificationTree.setLabel(name);
-        classificationTree.setLevel(index);
-        classificationTree.setName(node.getNodeName());
-        classificationTree.setParent(targetNames.length==1?"ROOT":node.getNodeName().toString().substring(0,lastIndexOfSeparator));
-        classificationTree.setRecordsCount((node.getInstanceCount()!=null?node.getInstanceCount():0));
-        children.add(classificationTree);
-        classificationTree.setChildren(new ArrayList<>());
+        classificationTreeNode.setLabel(name);
+        classificationTreeNode.setLevel(index);
+        classificationTreeNode.setName(node.getNodeName());
+        classificationTreeNode.setParent(targetNames.length==1?"ROOT":node.getNodeName().toString().substring(0,lastIndexOfSeparator));
+        classificationTreeNode.setRecordsCount((node.getInstanceCount()!=null?node.getInstanceCount():0));
+        children.add(classificationTreeNode);
+        classificationTreeNode.setChildren(new ArrayList<>());
         if (!CollectionUtils.isEmpty(node.getReferenceNode())) {
             for (Map.Entry<String, Node<JsonObject>> entrySet : node.getReferenceNode().entrySet()) {
                 if (entrySet.getValue().getInstanceCount() != null) {
-                    recursiveChildNode(index + 1, entrySet.getValue(), classificationTree.getChildren());
+                    recursiveChildNode(index + 1, entrySet.getValue(), classificationTreeNode.getChildren());
                 }
             }
         }else {
             String fileName = node.getNodeName().replaceAll("\\.", "_") + ".csv";
-            classificationTree.setFileName(fileName);
+            classificationTreeNode.setFileName(fileName);
         }
     }
 
-    private void recursiveChildNode(int index, Node<JsonObject> node, List<ClassificationTree> children, Map<String,String> displayNamesMap) {
+    private void recursiveChildNode(int index, Node<JsonObject> node, List<ClassificationTreeNode> children, Map<String,String> displayNamesMap) {
 
         String[] targetNames = node.getNodeName().split("\\.");
         String dataNodeName = targetNames[targetNames.length - 1];
-        ClassificationTree classificationTree = new ClassificationTree();
+        ClassificationTreeNode classificationTreeNode = new ClassificationTreeNode();
 
         String name = (displayNamesMap.containsKey(dataNodeName)?displayNamesMap.get(dataNodeName):dataNodeName)+" ("+(node.getInstanceCount()!=null?node.getInstanceCount():0)+")";
 
-        classificationTree.setLabel(name);
-        classificationTree.setLevel(index);
-        classificationTree.setParent(targetNames.length==1?"ROOT":targetNames[targetNames.length-2]);
-        classificationTree.setRecordsCount((node.getInstanceCount()!=null?node.getInstanceCount():0));
-        children.add(classificationTree);
-        classificationTree.setChildren(new ArrayList<>());
+        classificationTreeNode.setLabel(name);
+        classificationTreeNode.setLevel(index);
+        classificationTreeNode.setParent(targetNames.length==1?"ROOT":targetNames[targetNames.length-2]);
+        classificationTreeNode.setRecordsCount((node.getInstanceCount()!=null?node.getInstanceCount():0));
+        children.add(classificationTreeNode);
+        classificationTreeNode.setChildren(new ArrayList<>());
         if (!CollectionUtils.isEmpty(node.getReferenceNode())) {
             for (Map.Entry<String, Node<JsonObject>> entrySet : node.getReferenceNode().entrySet()) {
                 if (entrySet.getValue().getInstanceCount() != null) {
-                    recursiveChildNode(index + 1, entrySet.getValue(), classificationTree.getChildren(),displayNamesMap);
+                    recursiveChildNode(index + 1, entrySet.getValue(), classificationTreeNode.getChildren(),displayNamesMap);
                 }
             }
         }else {
             String fileName = node.getNodeName().replaceAll("\\.", "_") + ".csv";
-            classificationTree.setFileName(fileName);
+            classificationTreeNode.setFileName(fileName);
         }
 
     }

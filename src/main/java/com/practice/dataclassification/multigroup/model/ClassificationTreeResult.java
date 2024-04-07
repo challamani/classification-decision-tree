@@ -1,7 +1,7 @@
-package com.practice.dataclassification.multigroup.domain;
+package com.practice.dataclassification.multigroup.model;
 
 public class ClassificationTreeResult {
-    private ClassificationTree classificationTree;
+    private ClassificationTreeNode classificationTreeNode;
     private String responseCode;
     private String responseDescription;
 
@@ -13,12 +13,12 @@ public class ClassificationTreeResult {
         this.responseDescription = responseDescription;
     }
 
-    public ClassificationTree getDecisionTree() {
-        return classificationTree;
+    public ClassificationTreeNode getDecisionTree() {
+        return classificationTreeNode;
     }
 
-    public void setDecisionTree(ClassificationTree classificationTree) {
-        this.classificationTree = classificationTree;
+    public void setDecisionTree(ClassificationTreeNode classificationTreeNode) {
+        this.classificationTreeNode = classificationTreeNode;
     }
 
     public String getResponseCode() {

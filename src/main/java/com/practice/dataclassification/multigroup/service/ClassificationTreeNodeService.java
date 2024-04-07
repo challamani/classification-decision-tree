@@ -98,6 +98,7 @@ public class ClassificationTreeNodeService {
     public Map<String, ClassificationNode> createClassificationTreeNodes(List<JsonObject> dataset,
                                                                          String datasetClassificationOption,
                                                                          String datasetName) {
+        classificationTreeNodes = new HashMap<>();
         createRootClassification();
         DatasetClassificationMeta metadata = datasetClassificationMetaReader.getDatasetClassificationMetadata(datasetName);
         ClassificationOption classificationOption = metadata.classificationOptions().stream()

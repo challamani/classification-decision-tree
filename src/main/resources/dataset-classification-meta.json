@@ -104,7 +104,68 @@
   },
   {
     "name": "employee",
-    "classificationNodes":[],
+    "classificationNodes":[
+      {
+        "name": "superDepartment",
+        "type": "parent",
+        "dataType": "string",
+        "decisions": [
+          {
+            "type": "STRING_EQ",
+            "value": null,
+            "nodeLabel": null
+          }
+        ]
+      },
+      {
+        "name": "department",
+        "type": "parent",
+        "dataType": "string",
+        "decisions": [
+          {
+            "type": "STRING_EQ",
+            "value": null,
+            "nodeLabel": null
+          }
+        ]
+      },
+      {
+        "name": "project",
+        "type": "parent",
+        "dataType": "string",
+        "decisions": [
+          {
+            "type": "STRING_EQ",
+            "value": null,
+            "nodeLabel": null
+          }
+        ]
+      },
+      {
+        "name": "team",
+        "type": "parent",
+        "dataType": "string",
+        "decisions": [
+          {
+            "type": "STRING_EQ",
+            "value": null,
+            "nodeLabel": null
+          }
+        ]
+      },
+      {
+        "name": "skill",
+        "type": "data",
+        "dataType": "string",
+        "decisions": [
+          {
+            "type": "STRING_EQ",
+            "value": null,
+            "nodeLabel": null
+          }
+        ]
+      }
+    ],
     "classificationOptions": [
       {
         "name": "superDepartment.department.project.team",
@@ -124,6 +185,23 @@
           {
             "name": "team",
             "executionId": 3
+          }
+        ]
+      },
+      {
+        "name": "superDepartment.department.skill",
+        "nodeLevels": [
+          {
+            "name": "superDepartment",
+            "executionId": 0
+          },
+          {
+            "name": "department",
+            "executionId": 1
+          },
+          {
+            "name": "skill",
+            "executionId": 2
           }
         ]
       }
