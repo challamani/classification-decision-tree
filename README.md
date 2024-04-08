@@ -3,9 +3,9 @@ Dynamic dataset classification tree based on the given dataset metadata.
 
 
 ## Dataset Metadata
-The dataset metadata describes the individual node/attribute type (root,parent,split and data) that are associated to dataset and its position in the list of classification options
+The dataset metadata describes the individual node/attribute type (root, parent, split, and data) that are associated with the dataset and its position in the list of classification options
 
-An Example metadata with a two classification options for employee dataset.
+Example metadata with a two-classification option for employee dataset.
 ```json
 {
   "name": "employee",
@@ -14,7 +14,7 @@ An Example metadata with a two classification options for employee dataset.
       "name": "superDepartment",
       "type": "parent",
       "dataType": "string",
-      "decisions": [{"type": "STRING_EQ","value": null,"nodeLabel": null}]
+      "decisions": [{"type": "STRING_EQ", "value": null,"nodeLabel": null}]
     },
     {
       "name": "department",
@@ -65,14 +65,14 @@ An Example metadata with a two classification options for employee dataset.
 
 ### Classification Options
 
-The classification option is mandatory input to perform the multi-group on the given dataset and classification tree will get constructed accordingly.
+The classification option is mandatory input to perform the multi-group on the given dataset and the classification tree will be constructed accordingly.
 Note: 
 1. We can create multiple classification options on a dataset, based on the cardinality of the dataset attributes and relationships
-2. Currently, this classification-tree project does support `atomic attribute` values (a flat dataset record), it doesn't support dataset(s) that contains a complex attribute values (object type)
-3. Dataset attribute that is belongs to `High cardinal number type, primitive list type and comma separated values` will support in the future for classification, this demands a logical reference nodes creation.   
+2. Currently, this classification-tree project does support `atomic attribute` values (a flat dataset record), but it doesn't support dataset(s) that contain a complex attribute values (object type)
+3. Dataset attribute that belongs to `High cardinal number type, primitive list type, and comma separated values` will support in the future for classification, this demands a logical reference nodes creation.   
 
 ## Dataset/Entity
-As this project supports any `flat dataset` classification (where all runtime attribute values are atomic), so not maintaining `Java pojo(s) or domain models` for deserializing the dataset records, using the Gson's JsonObject to store and retrieve the records.
+As this project supports any `flat dataset` classification (where all runtime attribute values are atomic), so not maintain `Java pojo(s) or domain models` for deserializing the dataset records, using the Gson's JsonObject to store and retrieve the records.
 
 An example rest-api call to create dataset records
 ```curl
@@ -100,7 +100,7 @@ curl --location 'http://localhost:8080/api/dataset/order/records' \
 ```
 ## Create Classification Tree
 
-An example request to create a classification tree on employee dataset
+An example request to create a classification tree on an employee dataset
 ### Request
 ```curl
 ### http://localhost:8080/api/classificationTree/{datasetName}/{classificationOption}
