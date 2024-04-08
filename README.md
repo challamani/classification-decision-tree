@@ -1,4 +1,4 @@
-# Classification tree-view
+# Dataset Classification
 Dynamic dataset classification tree based on the given dataset metadata.
 
 
@@ -248,5 +248,5 @@ function drawChart(){
 }
 ```
 
-![Classification Chart View](https://github.com/challamani/classification-decision-tree/blob/master/src/main/resources/images/googles_org_chart_screenshot.png)
+![Classification Chart View](https://github.com/challamani/dataset-classification/blob/master/src/main/resources/images/googles_org_chart_screenshot.png)
 
