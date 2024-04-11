@@ -1,5 +1,5 @@
 # Dataset Classification
-Dynamic dataset classification tree based on the given dataset metadata.
+Generate a Dynamic dataset classification tree based on the dataset metadata.
 
 
 ## Dataset Metadata
@@ -65,10 +65,11 @@ Example metadata with a two-classification option for employee dataset.
 
 ### Classification Options
 
-The classification option is mandatory input to perform the multi-group on the given dataset and the classification tree will be constructed accordingly.
+The classification option is a mandatory input to perform the multi-group on the given dataset and the classification tree will be constructed accordingly.
+
 Note: 
-1. We can create multiple classification options on a dataset, based on the cardinality of the dataset attributes and relationships
-2. Currently, this classification-tree project does support `atomic attribute` values (a flat dataset record), but it doesn't support dataset(s) that contain a complex attribute values (object type)
+1. We can create multiple classification options on a dataset, based on the cardinality of the dataset attributes and the relationship among those attributes.
+2. Currently, this classification-tree project does support `atomic attribute` values (a flat dataset record), but it doesn't support dataset(s) that contain complex attribute values (object type)
 3. Dataset attribute that belongs to `High cardinal number type, primitive list type, and comma separated values` will support in the future for classification, this demands a logical reference nodes creation.   
 
 ## Dataset/Entity
