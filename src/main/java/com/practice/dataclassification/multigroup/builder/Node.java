@@ -12,6 +12,8 @@ public class Node<T> implements NodeType {
     private String nodeName;
     private String dataSetLink;
 
+    private String attribute;
+
     public String getDataSetLink() {
         return dataSetLink;
     }
@@ -23,6 +25,12 @@ public class Node<T> implements NodeType {
     public Node(String name) {
         this.nodeName = name;
     }
+
+    public Node(String nodeName, String attribute) {
+        this.nodeName = nodeName;
+        this.attribute = attribute;
+    }
+
     public List<T> getData() {
         return data;
     }
@@ -61,6 +69,14 @@ public class Node<T> implements NodeType {
 
     public void setReferenceNode(Map<String, Node<T>> referenceNode) {
         this.referenceNode = referenceNode;
+    }
+
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
     }
 
     @Override

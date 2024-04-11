@@ -57,6 +57,7 @@ public class ClassificationTreeNodeService {
                     });
             String nodeReference = nodeName.toString().substring(0, nodeName.toString().length() - 1);
             ClassificationNode treeNode = classificationTreeNodes.getOrDefault(nodeReference, new ClassificationNode());
+            treeNode.setAttribute(runningNode.getAttribute());
             treeNode.setName(nodeReference);
             if (Objects.isNull(treeNode.getDecisions())) {
                 treeNode.setDecisions(new HashSet<>());
@@ -71,10 +72,13 @@ public class ClassificationTreeNodeService {
                 treeNode.setType("parent");
                 nextClassificationNode.getDecisions().stream().forEach(decision -> {
                     Decision treeNodeDecision = new Decision();
-                    String suffixLabel = Objects.isNull(decision.getNodeLabel()) ? record.get(nextClassificationNode.getName()).getAsJsonPrimitive().getAsString() :
+
+                    String suffixLabel = Objects.isNull(decision.getNodeLabel()) ?
+                            record.get(nextClassificationNode.getName()).getAsJsonPrimitive().getAsString() :
                             decision.getNodeLabel();
 
                     treeNodeDecision.setReferenceNode(nodeName.toString().concat(suffixLabel));
+                    treeNodeDecision.setAttribute(nextClassificationNode.getAttribute());
                     treeNodeDecision.setType(decision.getType());
                     String decisionValue = Objects.isNull(decision.getValue()) ? record.get(nextClassificationNode.getName()).getAsJsonPrimitive().getAsString() :
                             decision.getValue();
@@ -90,6 +94,7 @@ public class ClassificationTreeNodeService {
                 treeNodeDecision.setReferenceNode(record.get(runningNode.getName()).getAsJsonPrimitive().getAsString());
                 treeNodeDecision.setType(decision.getType());
                 treeNodeDecision.setValue(record.get(runningNode.getName()).getAsJsonPrimitive().getAsString());
+                treeNodeDecision.setAttribute(runningNode.getAttribute());
                 classificationTreeNodes.get("ROOT").getDecisions().add(treeNodeDecision);
             });
         }
@@ -105,14 +110,13 @@ public class ClassificationTreeNodeService {
                 .filter(option1 -> option1.name().equalsIgnoreCase(datasetClassificationOption))
                 .findFirst().orElse(null);
 
-        dataset.forEach(jsonObject -> {
-            classificationOption.nodeLevels().forEach(nodeLevel -> {
-                ClassificationNode runningNode = metadata.classificationNodes()
-                        .stream().filter(node -> node.getName().equalsIgnoreCase(nodeLevel.name()))
-                        .findFirst().orElse(null);
-                createClassificationTreeNodes(jsonObject, runningNode, metadata, classificationOption);
-            });
-        });
+        dataset.forEach(jsonObject ->
+                classificationOption.nodeLevels().forEach(nodeLevel -> {
+            ClassificationNode runningNode = metadata.classificationNodes()
+                    .stream().filter(node -> node.getName().equalsIgnoreCase(nodeLevel.name()))
+                    .findFirst().orElse(null);
+            createClassificationTreeNodes(jsonObject, runningNode, metadata, classificationOption);
+        }));
         return classificationTreeNodes;
     }
 }

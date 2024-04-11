@@ -34,7 +34,7 @@ public class ClassificationTreeStructure {
             predicateNode.put(decision.getReferenceNode(), new Condition.ConditionBuilder()
                     .setType(decision.getType())
                     .setValue(decision.getValue()).build());
-            referenceNode.put(decision.getReferenceNode(), new Node<>(decision.getReferenceNode()));
+            referenceNode.put(decision.getReferenceNode(), new Node<>(decision.getReferenceNode(), decision.getAttribute()));
         }
         root.setPredicateNode(predicateNode);
         root.setReferenceNode(referenceNode);
@@ -51,7 +51,7 @@ public class ClassificationTreeStructure {
                     for (Decision decision : decisionNode.getDecisions()) {
                         predicateNode.put(decision.getReferenceNode(), new Condition.ConditionBuilder()
                                 .setType(decision.getType()).setValue(decision.getValue()).build());
-                        referenceNode.put(decision.getReferenceNode(), new Node<>(decision.getReferenceNode()));
+                        referenceNode.put(decision.getReferenceNode(), new Node<>(decision.getReferenceNode(),decision.getAttribute()));
                     }
                     v.setPredicateNode(predicateNode);
                     v.setReferenceNode(referenceNode);
@@ -60,9 +60,7 @@ public class ClassificationTreeStructure {
                 }
             });
 
-            node.getReferenceNode().forEach((k, v) -> {
-                initChildNodes(v, nodeMap);
-            });
+            node.getReferenceNode().forEach((key, value) -> initChildNodes(value, nodeMap));
         }
     }
 
@@ -101,9 +99,8 @@ public class ClassificationTreeStructure {
         classificationTreeNode.setName("ROOT");
         classificationTreeNode.setLevel(0);
         classificationTreeNode.setChildren(new ArrayList<>());
-        root.getReferenceNode().forEach((k, v) -> {
-            recursiveChildNode(1, v, classificationTreeNode.getChildren());
-        });
+        root.getReferenceNode().forEach((key, value) ->
+                recursiveChildNode(1, value, classificationTreeNode.getChildren()));
         return classificationTreeNode;
     }
 
@@ -113,9 +110,8 @@ public class ClassificationTreeStructure {
         classificationTreeNode.setLabel("ROOT");
         classificationTreeNode.setLevel(0);
         classificationTreeNode.setChildren(new ArrayList<>());
-        root.getReferenceNode().forEach((k, v) -> {
-            recursiveChildNode(1, v, classificationTreeNode.getChildren(),displayNamesMap);
-        });
+        root.getReferenceNode().forEach((key, value) ->
+                recursiveChildNode(1, value, classificationTreeNode.getChildren(), displayNamesMap));
         return classificationTreeNode;
     }
 
@@ -127,16 +123,19 @@ public class ClassificationTreeStructure {
 
         Integer lastIndexOfSeparator = node.getNodeName().lastIndexOf('.');
         String[] targetNames = node.getNodeName().split("\\.");
-        String dataNodeName = targetNames[targetNames.length - 1];
         ClassificationTreeNode classificationTreeNode = new ClassificationTreeNode();
 
-        String name = dataNodeName+" ("+(node.getInstanceCount()!=null?node.getInstanceCount():0)+")";
+        String name = targetNames[targetNames.length - 1];
+        String parent = targetNames.length==1?"ROOT":node.getNodeName().toString().substring(0,lastIndexOfSeparator);
+
         classificationTreeNode.setLabel(name);
         classificationTreeNode.setLevel(index);
         classificationTreeNode.setName(node.getNodeName());
-        classificationTreeNode.setParent(targetNames.length==1?"ROOT":node.getNodeName().toString().substring(0,lastIndexOfSeparator));
-        classificationTreeNode.setRecordsCount((node.getInstanceCount()!=null?node.getInstanceCount():0));
+        classificationTreeNode.setParent(parent);
+        classificationTreeNode.setRecordsCount((Objects.nonNull(node.getInstanceCount())?node.getInstanceCount():0));
+        classificationTreeNode.setAttribute(node.getAttribute());
         children.add(classificationTreeNode);
+
         classificationTreeNode.setChildren(new ArrayList<>());
         if (!CollectionUtils.isEmpty(node.getReferenceNode())) {
             for (Map.Entry<String, Node<JsonObject>> entrySet : node.getReferenceNode().entrySet()) {

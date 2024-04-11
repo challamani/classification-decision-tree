@@ -6,6 +6,7 @@ public class Decision {
     private String type;
     private String value;
     private String referenceNode;
+    private String attribute;
     private String nodeLabel;
 
     @Override
@@ -13,7 +14,11 @@ public class Decision {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Decision decision = (Decision) o;
-        return Objects.equals(type, decision.type) && Objects.equals(value, decision.value) && Objects.equals(referenceNode, decision.referenceNode) && Objects.equals(nodeLabel, decision.nodeLabel);
+        return Objects.equals(type, decision.type)
+                && Objects.equals(value, decision.value)
+                && Objects.equals(referenceNode, decision.referenceNode)
+                && Objects.equals(nodeLabel, decision.nodeLabel)
+                && Objects.equals(attribute, decision.attribute);
     }
 
     @Override
@@ -61,5 +66,13 @@ public class Decision {
 
     public void setNodeLabel(String nodeLabel) {
         this.nodeLabel = nodeLabel;
+    }
+
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
     }
 }

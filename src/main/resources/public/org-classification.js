@@ -24,17 +24,18 @@ function drawChart(apiData, divId) {
         data.addColumn('string', 'ToolTip');
 
         apiData.forEach(item => {
-            data.addRow([{'v':item.name, 'f':item.name+'<div style="color:red; font-style:italic">'+item.label+'</div>'},item.parentNode, '']);
+            data.addRow([{'v':item.name, 'f':item.label+'<div style="color:red; font-style:italic"> ['+item.records+']</div>'},item.parentNode, '']);
         });
 
-        // chart options
         var options = {
-            size: 'medium', // Set layout size to large (default)
+            size: 'medium',
             allowCollapse: true,
-            orientation :'vertical',
             allowHtml: true
         };
-        // Create and draw the chart
+
+        data.setRowProperty(2, 'selectedStyle', 'background-color:#00FF00');
+        data.setRowProperty(1, 'style', 'border: 1px solid green');
+
         var chart = new google.visualization.OrgChart(document.getElementById(divId));
         chart.draw(data, options);
 }

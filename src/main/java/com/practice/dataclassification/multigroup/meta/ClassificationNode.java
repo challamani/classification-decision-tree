@@ -7,6 +7,7 @@ public class ClassificationNode {
     private String name;
     private String type;
     private String dataType;
+    private String attribute;
 
     public Set<Decision> getDecisions() {
         return decisions;
@@ -48,5 +49,13 @@ public class ClassificationNode {
 
     public String getDataType() {
         return dataType;
+    }
+
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
     }
 }

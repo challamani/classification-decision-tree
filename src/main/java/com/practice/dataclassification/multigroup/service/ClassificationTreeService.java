@@ -140,7 +140,8 @@ public class ClassificationTreeService {
         flatNodes.add(new FlatNode(classificationTreeNode.getName(),
                 (classificationTreeNode.getParent().equalsIgnoreCase("ROOT")?"":classificationTreeNode.getParent()),
                 classificationTreeNode.getLabel(),
-                classificationTreeNode.getRecordsCount()));
+                classificationTreeNode.getRecordsCount(),
+                classificationTreeNode.getAttribute()));
 
         if(!CollectionUtils.isEmpty(classificationTreeNode.getChildren())){
             classificationTreeNode.getChildren().forEach(treeNode -> {

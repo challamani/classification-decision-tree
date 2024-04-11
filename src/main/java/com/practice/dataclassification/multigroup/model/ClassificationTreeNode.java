@@ -12,6 +12,7 @@ public class ClassificationTreeNode {
     private String fileName;
     private String expandedIcon;
     private String collapsedIcon;
+    private String attribute;
 
     public ClassificationTreeNode() {
         expandedIcon = "fa fa-folder-open";
@@ -88,5 +89,13 @@ public class ClassificationTreeNode {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
     }
 }
