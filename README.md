@@ -1,9 +1,18 @@
 # Dataset Classification
-Generate a Dynamic dataset classification tree based on the dataset metadata.
+The `dataset-classification` service generates a Dynamic dataset classification tree based on the dataset metadata.
 
+## Table of Contents
 
-## Dataset Metadata
-The dataset metadata describes the individual node/attribute type (root, parent, split, and data) that are associated with the dataset and its position in the list of classification options
+- [About Dataset Metadata](#dataset-metadata)
+- [Classification Options](#classification-options)
+- [Usage](#usage)
+  - [Create dataset records](#datasetentity)
+  - [Generate classification tree](#generate-classification-tree)
+  - [Render classification tree view](#classification-tree-view)
+- [Org-Chart View](#googles-org-chart-integration)
+
+### Dataset Metadata
+The dataset metadata is a json input to dataset-classification service, it describes about the node/attribute types (root, parent, split, and data) of a dataset, each associated with specific positions within the classification options list, based on the hierarchical position aggregation (records grouping) will get applied.
 
 Example metadata with a two-classification option for employee dataset.
 ```json
@@ -65,50 +74,54 @@ Example metadata with a two-classification option for employee dataset.
 
 ### Classification Options
 
-The classification option is a mandatory input to perform the multi-group on the given dataset and the classification tree will be constructed accordingly.
+The classification option is a mandatory input to perform the multi-grouping on the given dataset. Subsequently,the classification tree is constructed in alignment with this input
 
 Note: 
-1. We can create multiple classification options on a dataset, based on the cardinality of the dataset attributes and the relationship among those attributes.
-2. Currently, this classification-tree project does support `atomic attribute` values (a flat dataset record), but it doesn't support dataset(s) that contain complex attribute values (object type)
-3. Dataset attribute that belongs to `High cardinal number type, primitive list type, and comma separated values` will support in the future for classification, this demands a logical reference nodes creation.   
+1. We can generate multiple classification options for a dataset by considering the cardinality of its attributes and the interrelationships between them.
+2. The current classification-tree project supports "atomic attribute" values, representing flat dataset records. However, it lacks support for datasets containing complex attribute values, such as object types
+3. In the future, the `dataset-classification` service will extend support to dataset attributes characterized by `high cardinality`, `primitive` list types, and `comma-separated` values. This expansion necessitates the creation of `logical reference nodes` to ensure efficient classification.   
 
-## Dataset/Entity
-As this project supports any `flat dataset` classification (where all runtime attribute values are atomic), so not maintain `Java pojo(s) or domain models` for deserializing the dataset records, using the Gson's JsonObject to store and retrieve the records.
+### Usage
 
-An example rest-api call to create dataset records
+#### Dataset/Entity
+Since the project exclusively supports the classification of `flat datasets`, that means no complex attribute structures, so there's no need to uphold `Java POJOs` or `domain models` for deserializing dataset records. Instead, the `Gson's JsonObject` serves as the intermediary for storing and retrieving these records efficiently.
+
+An example rest-api call to store dataset records for `employee dataset classification`
 ```curl
 #http://localhost:8080/api/dataset/{datasetName}/records
-curl --location 'http://localhost:8080/api/dataset/order/records' \
+curl --location 'http://localhost:8080/api/dataset/employee/records' \
 --header 'Content-Type: application/json' \
 --data '[
-    {
-        "category": "Books",
-        "state": "Manchester",
-        "price": "1000",
-        "zipCode": "M00002",
-        "user": "bob",
-        "orderId":67900
-    },
-    {
-        "category": "Books",
-        "state": "Glasgow",
-        "price": "2000",
-        "zipCode": "G00002",
-        "user": "bob",
-        "orderId":67901
-    }
-]'
+        {
+            "superDepartment": "Finance",
+            "department": "Accounting",
+            "project": "ReportingSystem",
+            "team": "Accounting",
+            "skill": "Analyst",
+            "experience": 2,
+            "name":"bob"
+        },
+        {
+            "superDepartment": "SuperSpecial2024",
+            "department": "GenAI",
+            "project": "NoCodeProj",
+            "team": "GenAIDevTeam",
+            "skill": "Python",
+            "experience": 4,
+            "name":"bob"
+        }
+    ]'
 ```
-## Create Classification Tree
+#### Generate Classification Tree
 
 An example request to create a classification tree on an employee dataset
-### Request
+##### Request
 ```curl
 ### http://localhost:8080/api/classificationTree/{datasetName}/{classificationOption}
 curl --location 'http://localhost:8080/api/classificationTree/employee/superDepartment.department.skill' 
 ```
 
-### Response
+##### Response
 ```json
 {
     "responseCode": "0",
@@ -208,16 +221,17 @@ curl --location 'http://localhost:8080/api/classificationTree/employee/superDepa
 }
 ```
 
-### To render the classification-tree view, we can invoke the GET endpoint on the browser.
+#### Classification-tree view
 ```curl
+#### To render the classification-tree view, we can invoke the GET endpoint on the browser.
 ### http://localhost:8080/api/classificationTree/{datasetName}/{classificationOption}/tree-view
 
 http://localhost:8080/api/classificationTree/employee/superDepartment.department.skill/tree-view
 ```
 
-## Google's Org Chart integration
+### Google's Org Chart integration
 
-### Example
+#### Example
 ```javascript
 google.charts.load('current', {packages:["orgchart"]});
 google.charts.setOnLoadCallback(drawChart);
